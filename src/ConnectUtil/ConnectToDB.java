@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class ConnectToDB extends Component {
     static final String DB_Info = "jdbc:mysql://127.0.0.1:3306/dictionarytest";
     static final String USER_NAME = "root";
-    static final String PASS = "anh@1972001";
+    static final String PASS = "2082001";
     public static Scanner inp = new Scanner(System.in);
 
     public static Connection getConnect() {

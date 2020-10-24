@@ -19,7 +19,7 @@ public class Word {
     }
 
     public void setWord(String word) {
-        this.word = word;
+        this.word = standardizeString(word);
     }
 
     public String getPronunciation() {
@@ -38,8 +38,29 @@ public class Word {
         this.define = define;
     }
 
+    public String showInTextArea() {
+        String temp = "";
+        String pron = pronunciation;
+        String def = define;
+        String[] resDef = def.split(";");
+        if (!"".equals(pron)) {
+            temp += pron + "\n";
+        }
+        for (String s : resDef) {
+            temp += s + "\n";
+        }
+        System.out.print(temp);
+        return temp;
+    }
+
     @Override
     public String toString() {
+        return word;
+    }
+
+    private String standardizeString(String word) {
+        word.toLowerCase();
+        word.trim();
         return word;
     }
 }

@@ -45,11 +45,13 @@ public class DictionaryRepo {
     }
 
     public void AddInDB(Word newWord) throws SQLException {
+        //fix add in position
         String insertQuery = "INSERT INTO tbltest(word,pronunciation,define) VALUES(?,?,?)";
         ps = con.prepareStatement(insertQuery);
         ps.setString(1, newWord.getWord());
         ps.setString(2, newWord.getPronunciation());
         ps.setString(3, newWord.getDefine());
+
         ps.executeUpdate();
     }
 

@@ -33,7 +33,7 @@ public class DictionaryController {
     public void UpdateWord(Word data, String newPronunciation, String newDefine) throws SQLException {
         repo.UpdateInDB(data, newPronunciation, newDefine);
     }
-    
+
     public void DeleteWord(String wordDelete) throws SQLException {
         repo.DeleteInDB(wordDelete);
     }
