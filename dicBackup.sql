@@ -184,7 +184,8 @@ INSERT INTO `tbltest` VALUES
 (189,'abelmosk','/\'eibəlmɔsk/','(danh từ) (thực vật học) cây vông vàng'),
 (190,'abend (abnormal ending)','','(Tech) kết thúc/chấm dứt bất thường'),
 (191,'abenteric','','(tính từ) (giải phẫu) học ngoài ruột, xa ruột'),
-(192,'aberrance','/æ\'berəns/;(aberrancy) /æ\'berənsi/','(danh từ) sự lầm lạc;(sinh vật học) sự khác thường'),(195,'aberrancy','/æ\'berənsi/','(danh từ) sự lầm lạc ;(sinh vật học) sự khác thường');
+(192,'aberrance','/æ\'berəns/;(aberrancy) /æ\'berənsi/','(danh từ) sự lầm lạc;(sinh vật học) sự khác thường'),
+(195,'aberrancy','/æ\'berənsi/','(danh từ) sự lầm lạc ;(sinh vật học) sự khác thường');
 /*!40000 ALTER TABLE `tbltest` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
