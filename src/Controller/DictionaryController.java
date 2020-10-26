@@ -13,15 +13,6 @@ public class DictionaryController {
         return repo.GetListInDB();
     }
 
-    public void PrintList() throws SQLException {
-        for (Word word : ShowList()) {
-            System.out.println("ID : " + word.getID());
-            System.out.println("Word : " + word.getWord());
-            System.out.println("Pronunciation : " + word.getPronunciation());
-            System.out.println("Define : " + word.getDefine() + "\n");
-        }
-    }
-
     public Word SearchWord(String wordToFind) throws SQLException {
         return repo.SearchInDB(wordToFind);
     }
