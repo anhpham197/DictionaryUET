@@ -12,7 +12,7 @@ public class Options extends javax.swing.JFrame {
 
     private DictionaryController controller;
     private Word word;
-    private javax.swing.JLabel UETLogo;
+    private javax.swing.JLabel logo;
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel defineLabel;
@@ -48,7 +48,7 @@ public class Options extends javax.swing.JFrame {
         cancelButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
-        UETLogo = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
         controller = new DictionaryController();
         word = new Word();
 
@@ -115,7 +115,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        UETLogo.setIcon(new javax.swing.ImageIcon("icon dictionary\\book2.png")); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon("icon dictionary\\book2.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,7 +132,7 @@ public class Options extends javax.swing.JFrame {
                                         .addComponent(jScrollPane2)
                                         .addComponent(jScrollPane3)))
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(UETLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,7 +168,7 @@ public class Options extends javax.swing.JFrame {
                                                         .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                                                         .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addContainerGap())
-                                        .addComponent(UETLogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(logo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
