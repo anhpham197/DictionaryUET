@@ -42,6 +42,7 @@ public class Translate {
         try {
             text = post(text);
             //text = "[{\"translations\":[{\"text\":\"Chào bạn\",\"to\":\"vi\"}]}]";
+            //System.out.println(text);
             Object obj = parser.parse(text);
             JSONArray array = (JSONArray)obj;
             JSONObject jsonObject = (JSONObject) array.get(0);
