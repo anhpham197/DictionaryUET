@@ -265,6 +265,9 @@ public class DictionaryView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!history.empty()){
+                    if(searchTextField.getText().equals(history.peek().getWord())) {
+                        history.pop();
+                    }
                     Word temp = history.pop();
                     searchTextField.setText(temp.getWord());
                     showDefine.setText(temp.showInTextArea());
