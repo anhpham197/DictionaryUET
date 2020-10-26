@@ -5,7 +5,7 @@ VD :GOOGLE_APPLICATION_CREDENTIALS=D:\ggAPI\dictionary-uet-5a1633bd8e16.json
 
 thêm maven vào project
 
-thêm câu lệnh sau vào pom.xml
+chép đoạn mã sau đặt vào trong thẻ project.
 
 <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
