@@ -1,6 +1,7 @@
 package View;
 
 import API.Speaker;
+import API.Translate;
 import Controller.DictionaryController;
 import Entity.Word;
 
@@ -19,7 +20,7 @@ public class DictionaryView extends JFrame {
      */
     DictionaryController controller;
     Options options;
-    private final List<Word> listWord;
+    private List<Word> listWord;
     private JMenuBar menu;
     private JScrollPane jScrollPane1;
     private JScrollPane jScrollPane2;
@@ -40,13 +41,12 @@ public class DictionaryView extends JFrame {
         controller = new DictionaryController();
         options = new Options();
         //get all words from DB
-        listWord = controller.ShowList();
+        updateDB();
         initComponents();
         initAPI();
         // Set Title
         setTitle("~ DICTIONARY UET BY OASISSS ~");
         setJMenuBar(menu);
-
         setMenu();
         setDefaultWordList();
         SetAction();
@@ -103,6 +103,7 @@ public class DictionaryView extends JFrame {
         optionsButton.setBackground(new Color(153, 153, 255));
         optionsButton.setFont(new Font("Arial Black", 1, 11)); // NOI18N
         optionsButton.setText("OPTIONS");
+        optionsButton.setToolTipText("Option");
         optionsButton.setBorder(new MatteBorder(null));
 
         speakButton.setIcon(new ImageIcon("icon dictionary\\speaker1.png"));
@@ -131,7 +132,7 @@ public class DictionaryView extends JFrame {
                                                 //.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(searchTextField, 100, 200, 600)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(transButton, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(transButton, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
 
                                         .addComponent(jScrollPane1, 300, 300, Short.MAX_VALUE))
 
@@ -142,7 +143,7 @@ public class DictionaryView extends JFrame {
                                                 .addGap(5, 10, 12))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(150, 150, 150)
-                                                .addComponent(optionsButton, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(optionsButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 15, 25)
                                                 .addComponent(speakButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 15, 25)
@@ -184,16 +185,19 @@ public class DictionaryView extends JFrame {
         searchTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
+                updateDB();
                 updateWordList(searchTextField.getText());
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
+                updateDB();
                 updateWordList(searchTextField.getText());
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
+                updateDB();
                 updateWordList(searchTextField.getText());
             }
         });
@@ -208,6 +212,7 @@ public class DictionaryView extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 showDefine.setText(listSearchWord.getSelectedValue().showInTextArea());
                 searchTextField.setText(listSearchWord.getSelectedValue().getWord());
+                updateDB();
                 setDefaultWordList();
             }
 
@@ -259,6 +264,7 @@ public class DictionaryView extends JFrame {
     }
 
     private void updateWordList(String characters) {
+
         DefaultListModel<Word> listModelWord = new DefaultListModel<>();
         for (Word a : listWord) {
             if (a.getWord().contains(characters)) {
@@ -273,11 +279,25 @@ public class DictionaryView extends JFrame {
         showDefine.setText("");
         String text = searchTextField.getText();
         try {
-            Word res = controller.SearchWord(text);
-            if (res != null) {
-                showDefine.setText(res.showInTextArea());
+
+            if (text != null) {
+                Word res = controller.SearchWord(text);
+                if (res != null) {
+                    showDefine.setText(res.showInTextArea());
+                } else {
+                    System.out.println("search online text in searchTextField");
+                    String def = new Translate().getOnlineDefine(text);
+                    showDefine.setText(def);
+                    //add word if word length < 50
+                    if(text.length() < 50){
+                        controller.AddNewWord(new Word(text,"", def));
+                        updateDB();
+                    }
+
+                }
+
             } else {
-                //search online word
+
                 JOptionPane.showMessageDialog(this, "Can't find your word \nPlease try again! ", "ERROR",
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -307,6 +327,7 @@ public class DictionaryView extends JFrame {
         }
     }
 
+
     private void optionsButtonActionPerformed() {//GEN-FIRST:event_optionsButtonActionPerformed
         options.setVisible(true);
     }//GEN-LAST:event_optionsButtonActionPerformed
@@ -315,6 +336,13 @@ public class DictionaryView extends JFrame {
         menu.add(new MenuSetting(this));
     }
 
+    private void updateDB() {
+        try {
+            listWord = controller.ShowList();
+        } catch (SQLException ex) {
+            ex.getCause();
+        }
+    }
 
     // End of variables declaration//GEN-END:variables
 }
