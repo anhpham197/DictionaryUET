@@ -5,7 +5,7 @@ VD :GOOGLE_APPLICATION_CREDENTIALS=D:\ggAPI\dictionary-uet-5a1633bd8e16.json
 
 thêm maven vào project
 
-thêm câu lệnh sau vào pom.xml
+chép đoạn mã sau đặt vào trong thẻ project.
 
 <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -40,10 +40,29 @@ thêm câu lệnh sau vào pom.xml
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-texttospeech</artifactId>
         </dependency>
+        
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-storage</artifactId>
             <version>1.113.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp-urlconnection</artifactId>
+            <version>2.7.5</version>
         </dependency>
 
         <dependency>
