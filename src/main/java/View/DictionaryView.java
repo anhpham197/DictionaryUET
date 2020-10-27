@@ -16,11 +16,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DictionaryView extends JFrame {
-    /**
-     * Creates new form DictionaryView
-     */
-    private final DictionaryController controller;
-    private final Options options;
+
+    private DictionaryController controller;
+    private Options options;
     private List<Word> listWord;
     private JMenuBar menu;
     private JScrollPane jScrollPane1;
@@ -35,20 +33,18 @@ public class DictionaryView extends JFrame {
     private JTextField searchTextField;
     private JTextArea showDefine;
     private JButton transButton;
-    private final Stack<Word> history;
+    private Stack<Word> history;
+    //API
     private Speaker speaker;
 
     public DictionaryView() throws SQLException {
+        history = new Stack<>();
         controller = new DictionaryController();
         options = new Options();
-        history = new Stack<>();
-        // Get all words from DB
+        //get all words from DB
         updateDB();
-
         initComponents();
         initAPI();
-
-        // Set Title
         setTitle("~ DICTIONARY UET BY OASISSS ~");
         setJMenuBar(menu);
         setMenu();
@@ -85,7 +81,7 @@ public class DictionaryView extends JFrame {
         listSearchWord.setFont(new Font("Consolas", 2, 14)); // NOI18N
         jScrollPane1.setViewportView(listSearchWord);
 
-        searchIcon.setIcon(new ImageIcon("icon dictionary\\searchIcon.png")); // NOI18N
+        searchIcon.setIcon(new ImageIcon("icon dictionary\\search.png")); // NOI18N
 
         searchTextField.add(searchIcon);
 
@@ -102,24 +98,29 @@ public class DictionaryView extends JFrame {
         transButton.setFont(new Font("Arial Black", 1, 11)); // NOI18N
         transButton.setText("TRANS");
         transButton.setToolTipText("Translate");
+        transButton.setBorder(new MatteBorder(null));
 
         optionsButton.setBackground(new Color(153, 153, 255));
         optionsButton.setFont(new Font("Arial Black", 1, 11)); // NOI18N
         optionsButton.setText("OPTIONS");
         optionsButton.setToolTipText("Option");
+        optionsButton.setBorder(new MatteBorder(null));
 
         speakButton.setIcon(new ImageIcon("icon dictionary\\speaker1.png"));
+        speakButton.setBackground(new Color(255, 255, 255));
         speakButton.setFont(new Font("Arial Black", 1, 11)); // NOI18N
         speakButton.setToolTipText("Speak");
+        speakButton.setBorder(new MatteBorder(null));
 
-        undoButton.setIcon(new ImageIcon("icon dictionary\\undoIcon.png"));
+        undoButton.setIcon(new ImageIcon("icon dictionary\\undo1.png"));
+        undoButton.setBackground(new Color(255, 255, 255));
         undoButton.setFont(new Font("Arial Black", 1, 11)); // NOI18N
         undoButton.setToolTipText("Undo");
+        undoButton.setBorder(new MatteBorder(null));
 
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -128,7 +129,7 @@ public class DictionaryView extends JFrame {
                                         .addGroup(layout.createSequentialGroup()
 
                                                 .addComponent(searchIcon)
-                                                .addGap(5, 5, 5)
+                                                .addGap(5,5,5)
                                                 .addComponent(searchTextField, 100, 200, 600)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(transButton, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
@@ -200,20 +201,25 @@ public class DictionaryView extends JFrame {
                 updateWordList(searchTextField.getText());
             }
         });
+
+        //enter press
         searchTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 transButtonActionPerformed();
             }
         });
+
+
         listSearchWord.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!listSearchWord.isSelectionEmpty()) {
+                if(!listSearchWord.isSelectionEmpty()) {
                     showDefine.setText(listSearchWord.getSelectedValue().showInTextArea());
                     searchTextField.setText(listSearchWord.getSelectedValue().getWord());
                     Word temp = listSearchWord.getSelectedValue();
                     history.push(temp);
+                    //System.out.println("add history");
                     updateDB();
                     setDefaultWordList();
 
@@ -259,7 +265,10 @@ public class DictionaryView extends JFrame {
         undoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!history.empty()) {
+                if(!history.empty()){
+                    if(searchTextField.getText().equals(history.peek().getWord())) {
+                        history.pop();
+                    }
                     Word temp = history.pop();
                     searchTextField.setText(temp.getWord());
                     showDefine.setText(temp.showInTextArea());
@@ -269,6 +278,7 @@ public class DictionaryView extends JFrame {
                 }
             }
         });
+
     }
 
     private void setDefaultWordList() {
@@ -280,19 +290,23 @@ public class DictionaryView extends JFrame {
     }
 
     private void updateWordList(String characters) {
+        characters = characters.toLowerCase();
         DefaultListModel<Word> listModelWord = new DefaultListModel<>();
         for (Word a : listWord) {
             if (a.getWord().contains(characters)) {
                 listModelWord.addElement(a);
             }
         }
+
         listSearchWord.setModel(listModelWord);
     }
 
-    private void transButtonActionPerformed() {
+    private void transButtonActionPerformed() {//GEN-FIRST:event_transButtonActionPerformed
         showDefine.setText("");
         String text = searchTextField.getText();
+        text = text.toLowerCase();
         try {
+
             if (text.length() > 0) {
                 Word res = controller.SearchWord(text);
                 if (res != null) {
@@ -301,8 +315,8 @@ public class DictionaryView extends JFrame {
                     System.out.println("search online text in searchTextField");
                     String def = new Translate().getOnlineDefine(text);
                     showDefine.setText(def);
-                    res = new Word(text, "", def);
-                    int dialog = JOptionPane.showConfirmDialog(this, "This word doesn't exist in your library. \nDo you want to add it?", "VERIFY", JOptionPane.OK_CANCEL_OPTION);
+                    res = new Word(text,"", def);
+                    int dialog = JOptionPane.showConfirmDialog(this, "These words aren't in your dictionary. \nAdd these words to your dictionary ?", "VERIFY", JOptionPane.OK_CANCEL_OPTION);
                     switch (dialog) {
                         case JOptionPane.OK_OPTION:
                             controller.AddNewWord(res);
@@ -312,32 +326,33 @@ public class DictionaryView extends JFrame {
                             break;
                     }
                 }
-                if (res.getWord().length() > 0) history.push(res);
+                if(res.getWord().length() > 0) history.push(res);
 
             } else {
+
                 JOptionPane.showMessageDialog(this, "Can't find your word \nPlease try again! ", "ERROR",
                         JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DictionaryView.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }//GEN-LAST:event_transButtonActionPerformed
 
     private void speakButtonActionPerformed() {
         System.out.println("press Speaker");
         try {
             String text = searchTextField.getText();
             if (text.length() <= 0) {
-                JOptionPane.showMessageDialog(this, "Can't find your word \nPlease try again! ",
-                        "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Can't find your word \nPlease try again! ", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (text.length() <= 150) {
+            if (text.length() > 0 && text.length() <= 150) {
                 speaker.buildMP3(text);
                 speaker.play();
             } else {
-                JOptionPane.showMessageDialog(this, "Your text is too long \n Please try again!",
-                        "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Your text is too long \n Please try again!", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -345,12 +360,13 @@ public class DictionaryView extends JFrame {
     }
 
 
-    private void optionsButtonActionPerformed() {
+    private void optionsButtonActionPerformed() {//GEN-FIRST:event_optionsButtonActionPerformed
         options.setVisible(true);
-    }
+    }//GEN-LAST:event_optionsButtonActionPerformed
 
     private void setMenu() {
         menu.add(new MenuSetting(this));
+        menu.add(new MenuHelp());
     }
 
     private void updateDB() {
@@ -360,4 +376,8 @@ public class DictionaryView extends JFrame {
             ex.getCause();
         }
     }
+    public void setSpeaker(String voice) {
+        speaker.setVoice(voice);
+    }
+
 }

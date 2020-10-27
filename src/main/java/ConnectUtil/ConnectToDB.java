@@ -1,48 +1,25 @@
 package ConnectUtil;
 
 import java.awt.*;
-import java.io.BufferedReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Scanner;
 
 public class ConnectToDB extends Component {
+    static final String DB_Info = "jdbc:mysql://127.0.0.1:3306/dictionarytest";
+    static final String USER_NAME = "root";
+    static final String PASS = "2082001";
+    public static Scanner inp = new Scanner(System.in);
+
     public static Connection getConnect() {
         try {
-            BufferedReader br = null;
-            String[] signIn = new String[3];
-            try {
-                br = new BufferedReader(new FileReader("ConnectToDB.txt"));
-                String textInALine;
-                int i = 0;
-                try {
-                    while ((textInALine = br.readLine()) != null) {
-                        String info = textInALine.substring(textInALine.indexOf(':') + 1);
-                        signIn[i++] = info;
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(ConnectToDB.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ConnectToDB.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                try {
-                    br.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ConnectToDB.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-            Connection bridge = DriverManager.getConnection(signIn[0], signIn[1], signIn[2]);
+            Connection bridge = DriverManager.getConnection(DB_Info, USER_NAME, PASS);
             System.out.println("Connected Successfully");
             return bridge;
         } catch (SQLException throwables) {
             System.out.println("Can't connect to this schema");
+            throwables.printStackTrace();
             return null;
         }
     }

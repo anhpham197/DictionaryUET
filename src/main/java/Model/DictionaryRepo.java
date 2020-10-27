@@ -16,7 +16,7 @@ public class DictionaryRepo {
     public List<Word> GetListInDB() throws SQLException {
         List<Word> listWord = new ArrayList<>();
         sqlFile = con.createStatement();
-        rs = sqlFile.executeQuery("SELECT * FROM tbltest ORDER BY Word");
+        rs = sqlFile.executeQuery("SELECT * FROM tbltest");
 
         while (rs.next()) {
             Word newObj = new Word();
@@ -45,6 +45,7 @@ public class DictionaryRepo {
     }
 
     public void AddInDB(Word newWord) throws SQLException {
+        //fix add in position
         String insertQuery = "INSERT INTO tbltest(word,pronunciation,define) VALUES(?,?,?)";
         ps = con.prepareStatement(insertQuery);
         ps.setString(1, newWord.getWord());

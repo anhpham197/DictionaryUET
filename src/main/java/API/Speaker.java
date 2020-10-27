@@ -11,6 +11,7 @@ import java.io.OutputStream;
 public class Speaker {
     private String fileName;
     private String language;
+    private String voiceSpeaker = "fm";
     private MP3Player mp3Player;
 
 
@@ -25,27 +26,40 @@ public class Speaker {
      * @param text input text to speak.
      */
     public void buildMP3(String text) throws Exception {
-        fileName = "audioDictionary\\" + text + ".mp3";
+        fileName = "audioDictionary\\" + text + "_" + voiceSpeaker + ".mp3";
         File file = new File(fileName);
         if (file.isFile()) {
-            System.out.print("end");
+            System.out.println("this file had been builded");
             return;
         }
         System.out.print(fileName);
         try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
-            // Set text to synthesis.
+            //set text to synthesis.
             SynthesisInput input = SynthesisInput.newBuilder().setText(text).build();
-
-            // Set audio file.mp3
+            //set audio file.mp3
             AudioConfig audioConfig = AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.MP3).build();
+            //set voice
+            VoiceSelectionParams voice;
+            if(voiceSpeaker.equals("fm")) {
+                voice = VoiceSelectionParams.newBuilder()
+                                .setLanguageCode("en-US") // languageCode = "en_us"
+                                .setSsmlGender(SsmlVoiceGender.FEMALE)
+                                .build();
+                System.out.println("set female's voice");
+            } else if (voiceSpeaker.equals("m")) {
+                voice = VoiceSelectionParams.newBuilder()
+                                .setLanguageCode("en-US") // languageCode = "en_us"
+                                .setSsmlGender(SsmlVoiceGender.MALE)
+                                .build();
+                System.out.println("set male's voice");
+            } else {
+                voice = VoiceSelectionParams.newBuilder()
+                                .setLanguageCode("en-US") // languageCode = "en_us"
+                                .setSsmlGender(SsmlVoiceGender.NEUTRAL)
+                                .build();
+                System.out.println("set neutral's voice");
+            }
 
-            // Set voice
-            VoiceSelectionParams voice =
-                    VoiceSelectionParams.newBuilder()
-                            .setLanguageCode("en-US") // languageCode = "en_us"
-                            .setSsmlGender(SsmlVoiceGender.FEMALE)
-                            .build();
-            //
             SynthesizeSpeechResponse response =
                     textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);
 
@@ -56,15 +70,19 @@ public class Speaker {
             try (OutputStream out = new FileOutputStream(fileName)) {
                 out.write(audioContents.toByteArray());
                 System.out.println("Audio content written to file : " + fileName);
+                //return audioContents;
             }
         }
+    }
 
-
+    public void setVoice(String voice) {
+        this.voiceSpeaker = voice;
     }
 
     public void play() {
         mp3Player = new MP3Player(new File(fileName));
         mp3Player.play();
+
     }
 
     public void stop() {

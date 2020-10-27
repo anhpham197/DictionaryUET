@@ -5,11 +5,10 @@ public class Word {
     private String word;
     private String pronunciation;
     private String define;
-
     public Word() {
-    }
 
-    public Word(String word, String pronunciation, String define) {
+    }
+    public Word(String word, String pronunciation,String define) {
         this.word = word;
         this.pronunciation = pronunciation;
         this.define = define;
