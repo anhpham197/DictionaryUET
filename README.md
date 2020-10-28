@@ -14,10 +14,11 @@
   * Reload project.
 * Setting **Environment Variables**:
   * Open System Properties dialog -> Advanced -> Environment variables
-  * Create new **System variables** with 1. Variable : **GOOGLE_APPLICATION_CREDENTIALS**
-                                         2. Value    : path to **dictionary-uet-5a1633bd8e16.json** in package **lib**
-                                              [Eg] : C:\Users\DELL\OneDrive\Máy tính\DictionaryUET\dictionary-uet-5a1633bd8e16.json
-                                          [Detail] : *https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html*
+  * Create new **System variables** with 
+    1. Variable : **GOOGLE_APPLICATION_CREDENTIALS** 
+    2. Value    : path to **dictionary-uet-5a1633bd8e16.json** in package **lib**
+    * [Eg] : C:\Users\DELL\OneDrive\Máy tính\DictionaryUET\dictionary-uet-5a1633bd8e16.json
+    * [Detail] : *https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html*
                                             
 ## STEP 2 : SET UP DATABASE SYSTEM (MYSQL)
 * Open package **lib** and add **mysql-connector-java-8.0.20.jar** into external libraries.
