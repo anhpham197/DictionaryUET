@@ -10,7 +10,7 @@
 ## STEP 1 : SET UP IN IDE
 * Clone project from GitHub Repository URL : *https://github.com/anhpham197/DictionaryUET.git*
 * Add a Maven Dependency to your project :
-  * Add these lines in this link into the tags **<project ...</project>** in **pom.xml** : *https://pastebin.com/0gLA52JV*
+  * Add these lines in this link into the tags **<project ...</project>** in **pom.xml** : *https://pastebin.com/wQtnWA25*
   * Reload project.
 * Setting **Environment Variables**:
   * Open System Properties dialog -> Advanced -> Environment variables
@@ -21,7 +21,6 @@
     * [Detail] : *https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html*
                                             
 ## STEP 2 : SET UP DATABASE SYSTEM (MYSQL)
-* Open package **lib** and add **mysql-connector-java-8.0.20.jar** into external libraries.
 * After downloading MySQL Community Server, open file **lib\ConnectToDB.txt** to and replace with your **localhost, username, pass** in MySQL as example.
 * Restore database: 
   * Open MySQL -> Server -> Data Import
