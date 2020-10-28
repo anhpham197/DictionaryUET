@@ -1,18 +1,30 @@
-# Cài đặt từ điển.
+# USER'S GUIDE
 
-- Tạo project.
-- Cài đặt Environment Variables.
-- Cài đặt dữ liệu SQL.
-- Chạy chương trình
+/**
+ * @Author Anh Pham, Thanh Bong 
+ * K64 CACLC3
+ * UET VNU
+ */
 
-## B1:Tạo project.
-- Tạo 1 project rỗng. Copy 2 file **src** và **lib** vào trong project.
-- Thêm maven vào trong project. Sau khi hoàn tất, project đã được chuyển sang Maven project, trong đó có chứa file pom.xml.thêm những dòng dưới [đây](https://pastebin.com/ydPd3uxE) vào tệp pom.xml ở trong thẻ <project></project>. Reload project. 
-## B2:- Cài đặt Environment Variables
-- Tạo thêm 1 System variables với **Variable name** là **GOOGLE_APPLICATION_CREDENTIALS** , **Variable value** là đường dẫn dấn đến file dictionary-uet-5a1633bd8e16.json trong lib VD: D:\ggAPI\lib\dictionary-uet-5a1633bd8e16.json . (hướng dẫn thêm System variables : https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html).
-
-## B3 Cài đặt dữ liệu SQL
-- import dữ liệu từ file lib\DictionaryDB_backup.sql vào MySQL.
-- sửa LOCALHOST, USERNAME, PASSWORD trong file lib\ConnectToDB.txt.
-
-## B4 Chạy chương trình tại hàm main trong Main.java.
+## STEP 1 : SET UP IN IDE
+- Clone project from GitHub Repository URL : *https://github.com/anhpham197/DictionaryUET.git*
+- Add a Maven Dependency to your project :
+ + Add these lines in this link into file **pom.xml** : *https://pastebin.com/0gLA52JV*
+ + Reload project.
+- Setting **Environment Variables**:
+ + Open System Properties dialog -> Advanced -> Environment variables
+ + Create new **System variables** with *Variable* : **GOOGLE_APPLICATION_CREDENTIALS**
+                                        *Value*    : path to **dictionary-uet-5a1633bd8e16.json** in package **lib**
+                                                Eg : C:\Users\DELL\OneDrive\Máy tính\DictionaryUET\dictionary-uet-5a1633bd8e16.json
+                                            Detail : *https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html*
+                                            
+## STEP 2 : SET UP DATABASE SYSTEM (MYSQL)
+- Open package **lib** and add **mysql-connector-java-8.0.20.jar** into external libraries.
+- After downloading MySQL Community Server, open file **lib\ConnectToDB.txt** to and replace with your **localhost, username, pass** in MySQL as example.
+- Restore database: 
+ + Open MySQL -> Server -> Data Import
+ + Select **Import from Self-Contained file** and chose path to **DictionaryDB_backup.sql** in package **lib**
+ + Create new *Target Schema* named **dictionarytest** 
+ + Select **Start Import**
+ 
+## STEP 3 : RUN PROJECT (Main.java)
