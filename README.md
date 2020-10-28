@@ -10,7 +10,7 @@
 ## STEP 1 : SET UP IN IDE
 * Clone project from GitHub Repository URL : *https://github.com/anhpham197/DictionaryUET.git*
 * Add a Maven Dependency to your project :
-  * Add these lines in this link into file **pom.xml** : *https://pastebin.com/0gLA52JV*
+  * Add these lines in this link into the tags **<project ...</project>** in **pom.xml** : *https://pastebin.com/0gLA52JV*
   * Reload project.
 * Setting **Environment Variables**:
   * Open System Properties dialog -> Advanced -> Environment variables
