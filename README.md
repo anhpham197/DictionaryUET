@@ -1,4 +1,4 @@
-# USER'S GUIDE
+# USER GUIDE
 
 /**
  * @Author Anh Pham, Thanh Bong 
